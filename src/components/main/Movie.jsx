@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import MovieModal from "./MovieModal";
+import { MoviesContext } from "../store/movie-context";
 
-export default function Movie({
-  id,
-  title,
-  coverImg,
-  rating,
-  year,
-  genres,
-  summary,
-}) {
+export default function Movie({ index }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const {
+    id,
+    title,
+    medium_cover_image: coverImg,
+    rating,
+    year,
+    genres,
+    summary,
+  } = useContext(MoviesContext).movies.showingdMovies[index];
 
   function handleClick() {
     setModalIsOpen(true);
@@ -24,13 +26,7 @@ export default function Movie({
   return (
     <>
       {modalIsOpen && (
-        <MovieModal
-          id={id}
-          title={title}
-          image={coverImg}
-          open={modalIsOpen}
-          onClose={handleClose}
-        />
+        <MovieModal index={index} open={modalIsOpen} onClose={handleClose} />
       )}
       <section
         className="w-[90%] md:min-h-60 mx-auto flex flex-col md:flex-row gap-4 bg-slate-200 dark:bg-slate-700 dark:text-slate-300 p-6 max-md:py-10 rounded-sm shadow-lg hover:scale-105 cursor-pointer duration-200"

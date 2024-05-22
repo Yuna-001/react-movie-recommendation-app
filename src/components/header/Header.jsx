@@ -1,19 +1,22 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 
 import Input from "./Input";
+import { MoviesContext } from "../store/movie-context";
 
-export default function Header({ onSearchTitle, onSort }) {
-  const searchTitle = useRef();
+export default function Header() {
+  const input = useRef();
+  const { searchTitle, changeSorting } = useContext(MoviesContext);
 
   function handleTitleClick() {
-    searchTitle.current.value = "";
-    onSearchTitle("");
+    input.current.value = "";
+    searchTitle("");
   }
 
   function handleSort(str) {
-    searchTitle.current.value = "";
-    onSort(str);
+    input.current.value = "";
+    changeSorting(str);
   }
+
   return (
     <header className="flex flex-col gap-10 mt-10 max-sm:mt-12">
       <h1
@@ -23,9 +26,9 @@ export default function Header({ onSearchTitle, onSort }) {
         Movie Recommendation App
       </h1>
       <Input
-        onSearch={() => onSearchTitle(searchTitle.current.value)}
+        onSearch={() => searchTitle(input.current.value)}
         onSelectChange={handleSort}
-        ref={searchTitle}
+        ref={input}
       />
     </header>
   );

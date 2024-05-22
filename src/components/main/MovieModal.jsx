@@ -1,9 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { createPortal } from "react-dom";
+import { MoviesContext } from "../store/movie-context";
 
-export default function MovieModal({ open, id, title, image, onClose }) {
+export default function MovieModal({ index, open, onClose }) {
   const [movie, setMovie] = useState([]);
   const dialog = useRef();
+  const { id, title, coverImg } =
+    useContext(MoviesContext).movies.showingdMovies[index];
 
   const year = movie.year ? <span>year : {movie.year} </span> : null;
   const runtime = movie.runtime ? (
@@ -59,7 +62,7 @@ export default function MovieModal({ open, id, title, image, onClose }) {
       </form>
       <section className="mb-4 mx-4 flex md:flex-row flex-col justify-between gap-8 max-md:mx-3">
         <img
-          src={movie.large_cover_image ?? image}
+          src={movie.large_cover_image ?? coverImg}
           className="md:w-[25%] w-[100%] object-contain  max-md:mt-3"
         ></img>
         <div className="mx-auto flex flex-col gap-4 text-center">

@@ -1,16 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 import Loading from "./components/Loading";
 import Header from "./components/header/Header";
 import Movie from "./components/main/Movie";
 import ThemeButton from "./components/ThemeButton";
+import { MoviesContext } from "./components/store/movie-context";
 
 function App() {
-  const [sorting, setSorting] = useState("rating");
-  const [movies, setMovies] = useState({
-    originalMovies: [],
-    showingdMovies: [],
-  });
+  const { movies, sorting, initializeMovies } = useContext(MoviesContext);
 
   const getMovies = async () => {
     const json = await (
@@ -19,7 +16,7 @@ function App() {
       )
     ).json();
 
-    setMovies({
+    initializeMovies({
       originalMovies: json.data.movies,
       showingdMovies: [...json.data.movies],
     });
@@ -29,55 +26,20 @@ function App() {
     getMovies();
   }, [sorting]);
 
-  function handleSearchTitle(str) {
-    setMovies((prevMovies) => {
-      if (str.trim() === "") {
-        return {
-          ...prevMovies,
-          showingdMovies: [...prevMovies.originalMovies],
-        };
-      }
-
-      const filteredMovies = prevMovies.originalMovies.filter(({ title }) =>
-        new RegExp(str, "i").test(title)
-      );
-
-      return {
-        ...prevMovies,
-        showingdMovies: filteredMovies,
-      };
-    });
-  }
-
-  function handleSortMovies(value) {
-    setSorting(value);
-  }
-
   return (
-    <>
-      <div className="min-h-screen text-center px-8 py-10 lg:py-5 bg-white dark:bg-black relative">
-        <ThemeButton />
-        <Header onSearchTitle={handleSearchTitle} onSort={handleSortMovies} />
-        {movies.originalMovies.length > 0 ? (
-          <main className="my-24 max-lg:my-20 mx-0 md:mx-10 grid lg:grid-cols-2 gap-16 grid-cols-1">
-            {movies.showingdMovies.map((movie) => (
-              <Movie
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                coverImg={movie.medium_cover_image}
-                rating={movie.rating}
-                year={movie.year}
-                genres={movie.genres}
-                summary={movie.summary}
-              />
-            ))}
-          </main>
-        ) : (
-          <Loading />
-        )}
-      </div>
-    </>
+    <div className="min-h-screen text-center px-8 py-10 lg:py-5 bg-white dark:bg-black relative">
+      <ThemeButton />
+      <Header />
+      {movies.originalMovies.length > 0 ? (
+        <main className="my-24 max-lg:my-20 mx-0 md:mx-10 grid lg:grid-cols-2 gap-16 grid-cols-1">
+          {movies.showingdMovies.map((movie, index) => (
+            <Movie key={movie.id} index={index} />
+          ))}
+        </main>
+      ) : (
+        <Loading />
+      )}
+    </div>
   );
 }
 
