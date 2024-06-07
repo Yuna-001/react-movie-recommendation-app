@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 
 import MovieModal from "./MovieModal";
-import { MoviesContext } from "../store/movie-context";
+import { MoviesContext } from "../../store/movie-context";
 
 export default function Movie({ index }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);

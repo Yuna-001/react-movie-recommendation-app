@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { createPortal } from "react-dom";
-import { MoviesContext } from "../store/movie-context";
+import { MoviesContext } from "../../store/movie-context";
 
 export default function MovieModal({ index, open, onClose }) {
   const [movie, setMovie] = useState([]);

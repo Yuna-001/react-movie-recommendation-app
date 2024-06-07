@@ -4,7 +4,7 @@ import Loading from "./components/Loading";
 import Header from "./components/header/Header";
 import Movie from "./components/main/Movie";
 import ThemeButton from "./components/ThemeButton";
-import { MoviesContext } from "./components/store/movie-context";
+import { MoviesContext } from "./store/movie-context";
 
 function App() {
   const { movies, sorting, initializeMovies } = useContext(MoviesContext);

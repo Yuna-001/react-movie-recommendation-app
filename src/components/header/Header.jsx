@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 
 import Input from "./Input";
-import { MoviesContext } from "../store/movie-context";
+import { MoviesContext } from "../../store/movie-context";
 
 export default function Header() {
   const input = useRef();
