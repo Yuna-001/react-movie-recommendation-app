@@ -39,14 +39,20 @@ export default function Movie({ index }) {
         ></img>
         <div className="flex gap-2 flex-col m-auto">
           <h2 className="font-semibold text-xl dark:text-white">{title}</h2>
-          <p>
-            {genres.length > 3
-              ? genres.slice(0, 3).join(", ") + "..."
-              : genres.join(", ")}
-          </p>
+          {genres && (
+            <p>
+              {genres.length > 3
+                ? genres.slice(0, 3).join(", ") + "..."
+                : genres.join(", ")}
+            </p>
+          )}
           <p>year : {year}</p>
           <p>rating : {rating}</p>
-          <p>{summary.length > 90 ? summary.slice(0, 90) + "..." : summary}</p>
+          {summary && (
+            <p>
+              {summary.length > 90 ? summary.slice(0, 90) + "..." : summary}
+            </p>
+          )}
         </div>
       </section>
     </>
