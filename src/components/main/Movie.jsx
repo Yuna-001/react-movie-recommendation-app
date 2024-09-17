@@ -6,7 +6,6 @@ import { MoviesContext } from "../../store/movie-context";
 export default function Movie({ index }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const {
-    id,
     title,
     medium_cover_image: coverImg,
     rating,
